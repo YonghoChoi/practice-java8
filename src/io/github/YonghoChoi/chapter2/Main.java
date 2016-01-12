@@ -14,17 +14,19 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        OriginJavaCase();
+        List<Apple> farmProducts = new ArrayList<Apple>();
+        farmProducts.add(new Apple("green", 105));
+        farmProducts.add(new Apple("yellow", 200));
+        farmProducts.add(new Apple("red", 300));
+        farmProducts.add(new Apple("blue", 150));
+
+        OriginJavaCase(farmProducts);
+        StategyDesignPatternUse(farmProducts);
+        PrettyPrintExam(farmProducts);
     }
 
-    private static void OriginJavaCase() {
-        List<Apple> farmProducts = new ArrayList<Apple>();
-        farmProducts.add(new Apple("green"));
-        farmProducts.add(new Apple("yellow"));
-        farmProducts.add(new Apple("red"));
-        farmProducts.add(new Apple("blue"));
-
-        OriginJavaCase origin = new OriginJavaCase();
+    private static void OriginJavaCase(List<Apple> farmProducts) {
+        OriginJavaUse origin = new OriginJavaUse();
 
         StringBuilder sb = new StringBuilder();
         List<Apple> result = origin.filterGreenApples(farmProducts);
@@ -32,6 +34,51 @@ public class Main {
             sb.append(apple.getColor() + " ");
         }
 
-        System.out.println("origin result : " + sb.toString());
+        System.out.println("filterGreenApples result : " + sb.toString());
+
+        result.clear();
+        sb.delete(0, sb.length());
+        result = origin.filterAppleByColor(farmProducts, "green");
+        for(Apple apple : result) {
+            sb.append(apple.getColor() + " ");
+        }
+
+        System.out.println("filterAppleByColor result : " + sb.toString());
+
+        result.clear();
+        sb.delete(0, sb.length());
+        result = origin.filterApplesByWeight(farmProducts, 150);
+        for(Apple apple : result) {
+            sb.append(apple.getColor() + " ");
+        }
+
+        System.out.println("filterApplesByWeight result : " + sb.toString());
+    }
+
+    private static void StategyDesignPatternUse(List<Apple> farmProducts) {
+        StategyDesignPatternUse stategy = new StategyDesignPatternUse();
+        List<Apple> result = stategy.filter(farmProducts, new AppleHeavyWeightPredicate());
+
+        StringBuilder sb = new StringBuilder();
+        for(Apple apple : result) {
+            sb.append(apple.getColor() + " ");
+        }
+        System.out.println("AppleHeavyWeightPredicate result : " + sb.toString());
+
+        result = stategy.filter(farmProducts, new AppleGreenColorPredicate());
+        sb.delete(0, sb.length());
+        for(Apple apple : result) {
+            sb.append(apple.getColor() + " ");
+        }
+        System.out.println("AppleGreenColorPredicate result : " + sb.toString());
+    }
+
+    private static void PrettyPrintExam(List<Apple> farmProducts) {
+        PrettyPrintApple prettyPrint = new PrettyPrintApple();
+        System.out.println("== Pretty Print Color And Weight ==");
+        prettyPrint.filterToString(farmProducts, new PrettyPrintColorAndWeight());
+
+        System.out.println("== Pretty Print Big or Small ==");
+        prettyPrint.filterToString(farmProducts, new PrettyPrintCompareWeight150());
     }
 }
