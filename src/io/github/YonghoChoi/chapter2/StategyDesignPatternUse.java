@@ -18,10 +18,6 @@ public class StategyDesignPatternUse {
     }
 }
 
-interface ApplePredicate {
-    boolean test(Apple apple);
-}
-
 class AppleHeavyWeightPredicate implements ApplePredicate {
     public boolean test(Apple apple) {
         return apple.getWeight() > 150;
