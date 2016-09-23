@@ -2,4 +2,7 @@
 .DS_Store
 out
 .idea
+.gradle
+build
+gradle
 *.iml

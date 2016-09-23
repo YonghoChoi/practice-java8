@@ -1,4 +1,4 @@
-package io.github.YonghoChoi.chapter2;
+package chap02;
 
 import java.util.ArrayList;
 import java.util.List;

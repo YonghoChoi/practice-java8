@@ -1,4 +1,4 @@
-package io.github.YonghoChoi.chapter2;
+package chap02;
 
 public class Apple {
     private String color;
